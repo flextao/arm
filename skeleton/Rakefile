@@ -32,8 +32,9 @@ if File.exist?(File.join(GEMS_ROOT, 'activerecord'))
   load File.join(GEMS_ROOT, RAILS_GEM_DIR, 'lib', 'tasks', 'databases.rake')
 
   # fix activerecord-jdbc-adapter 0.9.1 postgre adapter drop database problem
-  # comment this line if you are not using jdbc postgre adapter
-  load File.join(ARM_ROOT, 'vendor', 'ext', 'jdbc_tasks_postgre_fix.rb')
+  if ActiveRecord::Base.configurations[RAILS_ENV]['driver'] =~ /postgres/
+    load File.join(ARM_ROOT, 'vendor', 'ext', 'jdbc_tasks_postgre_fix.rb')
+  end
 
   desc "do db:migrate task, it's for Migrator.java to do migration easier"
   task :default => ['db:migrate']

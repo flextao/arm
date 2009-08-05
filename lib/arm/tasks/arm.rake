@@ -7,7 +7,7 @@ namespace :arm do
       require 'rubygems/gem_runner'
 
       activerecord_gems = %w(activerecord rails activesupport)
-      activerecord_gems_version = ENV['VERSION'] || '2.3.2'
+      activerecord_gems_version = ENV['ACTIVERECORD_VERSION'] || '2.3.2'
 
       gems = activerecord_gems.collect { |g| find_gem(g, activerecord_gems_version) }
       gems << find_gem('activerecord-jdbc-adapter')

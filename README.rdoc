@@ -7,6 +7,8 @@ ARM generates project skeleton for Java project to embed ActiveRecord Migration.
 == Use it in your project
 
 * install arm gem
+* install activerecord, activesupport and rails gems, by default, arm takes version 2.3.2, you can specify a system environment variable ACTIVERECORD_VERSION to change the version.
+* install activerecord-jdbc-adapter gem
 * go to your Java project root directory
 * run script 'arm', it will create project skeleton for you
 * add jruby complete jar and database jdbc jars into lib dir
