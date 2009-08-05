@@ -8,3 +8,5 @@ rescue LoadError
 end
 
 ARM.generate!
+
+`rake arm:freeze:gems`
