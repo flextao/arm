@@ -44,7 +44,7 @@ else
 Gem::Specification.new do |spec|
   spec.name = 'arm'
   spec.version = "0.0.1"
-  spec.summary = "ARM is for Java project to embed ActiveRecord Migration."
+  spec.summary = "ARM generates project skeleton for Java project to embed ActiveRecord Migration."
 
   #### Dependencies and requirements.
   spec.files = #{(Dir.glob("lib/**/*") + Dir.glob("skeleton/**/*") + ["bin/arm", "CHANGES", "arm.gemspec", "lib", "MIT-LICENSE.TXT", "Rakefile", "README.rdoc", "TODO"]).inspect}

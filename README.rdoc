@@ -1,0 +1,23 @@
+= ARM
+
+Support ARM version: 0.0.x
+
+ARM generates project skeleton for Java project to embed ActiveRecord Migration.
+
+== Use it in your project
+
+* install arm gem
+* go to your Java project root directory
+* run script 'arm', it will create project skeleton for you
+* add jruby complete jar and database jdbc jars into lib dir
+* add migration into db/migrate directory
+* config database.yml, see config/database.yml.example for example
+* do migrate: './script/jrake db:migrate'
+
+== License
+
+ARM is available under an MIT License Copyright (c) 2009 Flextao.
+
+== Author
+
+Li Xiao <xli@flextao.com>
