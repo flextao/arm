@@ -1,0 +1,34 @@
+
+RAILS_ENV = ENV['RAILS_ENV'] || 'development'
+RAILS_ROOT = File.dirname(__FILE__) unless defined?(RAILS_ROOT)
+ARM_ROOT = RAILS_ROOT
+
+require 'arm/tasks/arm'
+
+require 'initializer'
+require 'activerecord'
+
+# only support activerecord 2.3.2 for dumpping string type id for table now
+if ActiveRecord::VERSION::STRING == '2.3.2'
+  $:.unshift File.join(ARM_ROOT, 'vendor', 'ext', 'activerecord-2.3.2', 'lib')
+end
+
+ActiveRecord::Base.logger = Logger.new(ARM.log_file)
+ActiveRecord::Base.logger.level = Logger::DEBUG
+ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
+ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[RAILS_ENV])
+
+# load rails tasks we need
+load File.join(ARM.rails_gem_dir, 'lib', 'tasks', 'misc.rake')
+load File.join(ARM.rails_gem_dir, 'lib', 'tasks', 'databases.rake')
+
+# fix activerecord-jdbc-adapter 0.9.1 postgre adapter drop database problem
+# comment this line if you are not using jdbc postgre adapter
+load File.join(ARM_ROOT, 'vendor', 'ext', 'jdbc_tasks_postgre_fix.rb')
+
+desc "do db:migrate task, it's for Migrator.java to do migration easier"
+task :default => ['db:migrate']
+
+task :test do
+  # in misc.rake, defined :default => :test, so we need define an empty test task here
+end

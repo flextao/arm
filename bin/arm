@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'arm'
+rescue LoadError
+  require 'rubygems'
+  require 'arm'
+end
+
+ARM.generate!

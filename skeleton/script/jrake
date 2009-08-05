@@ -1,0 +1,115 @@
+#!/bin/bash
+
+dir="`dirname $0`/.."
+export CLASSPATH=$dir/lib
+
+cygwin=false
+
+# ----- Identify OS we are running under --------------------------------------
+case "`uname`" in
+CYGWIN*) cygwin=true
+esac
+
+# ----- Verify and Set Required Environment Variables -------------------------
+
+if [ -z "$JRUBY_HOME" ] ; then
+  ## resolve links - $0 may be a link to  home
+  PRG=$0
+  progname=`basename "$0"`
+
+  while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '.*/.*' > /dev/null; then
+    PRG="$link"
+    else
+    PRG="`dirname $PRG`/$link"
+    fi
+  done
+
+  JRUBY_HOME_1=`dirname "$PRG"`           # the ./bin dir
+  JRUBY_HOME_1=`dirname "$JRUBY_HOME_1"`  # the . dir
+  if [ -d "${JRUBY_HOME_1}/lib" ] ; then
+    JRUBY_HOME="${JRUBY_HOME_1}"
+  fi
+else
+  if $cygwin; then
+    JRUBY_HOME=`cygpath -u "$JRUBY_HOME"`
+  fi
+fi
+
+if [ -z "$JAVA_HOME" ] ; then
+  JAVA_CMD='java'
+else
+  if $cygwin; then
+    JAVA_HOME=`cygpath -u "$JAVA_HOME"`
+  fi
+  JAVA_CMD="$JAVA_HOME/bin/java"
+fi
+
+JRUBY_SHELL=/bin/sh
+
+# ----- Set Up The System Classpath -------------------------------------------
+
+if [ "$JRUBY_PARENT_CLASSPATH" != "" ]; then
+    # Use same classpath propagated from parent jruby
+    CP=$JRUBY_PARENT_CLASSPATH
+else
+    if [ "$CLASSPATH" != "" ]; then
+        CP="$CLASSPATH"
+        if $cygwin; then
+            CP=`cygpath -p -u "$CP"`
+        fi
+    else
+        CP=""
+    fi
+
+    CP_DELIMETER=":"
+
+    # add necessary jars for command-line execution
+    for j in "$JRUBY_HOME"/lib/*.jar; do
+        if [ "$CP" ]; then
+            CP="$CP$CP_DELIMETER$j"
+            else
+            CP="$j"
+        fi
+    done
+
+    if $cygwin; then
+    CP=`cygpath -p -w "$CP"`
+    fi
+fi
+
+
+# ----- Execute The Requested Command -----------------------------------------
+
+DEBUG=""
+if [ "$1" = "JAVA_DEBUG" ]; then
+  DEBUG="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y"
+  shift
+else
+  if [ "$1" = "JPROFILER" ]; then
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$JPROFILER_PATH/bin/linux-x86
+    DEBUG="-Xrunjprofiler:port=8000,noexit -Xbootclasspath/a:/$JPROFILER_PATH/bin/agent.jar"
+    shift
+  else if [ "$1" = "HPROF" ]; then
+      DEBUG="-Xrunhprof:cpu=samples"
+      shift
+  fi
+  fi
+fi
+
+if $cygwin; then
+  JAVA_HOME=`cygpath --mixed "$JAVA_HOME"`
+fi
+
+if [ "$1" = "SERVER" ]; then
+  DEBUG="-server"
+  shift
+fi
+
+exec "$JAVA_CMD" $JAVA_OPTS $DEBUG -Xmx1024m -XX:MaxPermSize=128m -Xss1024k -Xverify:none -da -classpath "$CP"    \
+  -XX:+HeapDumpOnOutOfMemoryError \
+  "-Djruby.jit.threshold=1000" \
+  "-Djruby.jit.logging=false" org.jruby.Main -S rake "$@"
+

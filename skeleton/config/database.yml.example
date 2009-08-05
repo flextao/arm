@@ -1,0 +1,20 @@
+production: 
+  adapter: jdbc
+  driver: org.postgresql.Driver
+  username: postgres
+  password: sa
+  url: jdbc:postgresql://localhost/app_name
+
+development:
+  adapter: jdbc
+  driver: org.postgresql.Driver
+  username: postgres
+  password: sa
+  url: jdbc:postgresql://localhost/app_name
+
+test:
+  adapter: jdbc
+  driver: org.postgresql.Driver
+  username: postgres
+  password: sa
+  url: jdbc:postgresql://localhost/app_name_test
