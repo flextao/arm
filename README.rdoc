@@ -55,13 +55,13 @@ Install the gem:
 
     public class Migrator {
       /**
-       * this is a very simple check method for your (acceptance) tests
+       * this is a simple check method to verify directory to run migration
        */
       public static boolean isMigrationBaseDir(String dir) {
           return new File(path(dir, "db")).exists();
       }
 
-      private final String base;
+      private final String base; // base directory to run migration
 
       public Migrator(String base) {
           this.base = base;
