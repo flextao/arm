@@ -1,0 +1,7 @@
+
+== release 0.0.1
+
+* generated project skeleton by 'arm' command
+* activerecord 2.3.2 patch for dumping database schema with string type primary key
+* activerecord-jdbc-adapter postgre fix patch
+* froze activerecord, activesupport, rails and activerecord-jdbc-adapter in vendor/gems directory after project skeleton created
