@@ -68,7 +68,6 @@ Gem::Specification.new do |spec|
   spec.author = "Li Xiao"
   spec.email = "xli@flextao.com"
   spec.homepage = "http://github.com/flextao/arm/tree/master"
-  spec.rubyforge_project = "arm"
 end
 GEM
   File.open(File.dirname(__FILE__) + '/arm.gemspec', 'w') do |f|
