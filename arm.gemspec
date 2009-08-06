@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   #### Documentation and testing.
 
   spec.has_rdoc = true
-  spec.extra_rdoc_files = ["README.rdoc", "MIT-LICENSE.txt", "TODO", "CHANGES"]
+  spec.extra_rdoc_files = ["README.rdoc", "MIT-LICENSE.TXT", "TODO", "CHANGES"]
   spec.rdoc_options = ["--line-numbers", "--inline-source", "--main", "README.rdoc", "--title", "\"ARM -- ActiveRecord Migration"]
 
   #### Author and project details.
