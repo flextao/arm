@@ -20,7 +20,7 @@ if File.exist?(File.join(GEMS_ROOT, 'activerecord'))
     $:.unshift File.join(ARM_ROOT, 'vendor', 'ext', 'activerecord-2.3.2', 'lib')
   end
 
-  arm_log_dir = File.exists?('logs') ? logs : (File.exists?('log') ? 'log' : '')
+  arm_log_dir = File.exists?('logs') ? "logs" : (File.exists?('log') ? 'log' : '')
   ActiveRecord::Base.logger = Logger.new(File.join(ARM_ROOT, arm_log_dir, 'arm.log'))
   ActiveRecord::Base.logger.level = Logger::DEBUG
   ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
