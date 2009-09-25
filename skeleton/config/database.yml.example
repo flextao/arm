@@ -1,6 +1,7 @@
 production: 
   adapter: jdbc
   driver: org.postgresql.Driver
+  database: postgresql
   username: postgres
   password: sa
   url: jdbc:postgresql://localhost/app_name
@@ -8,6 +9,7 @@ production:
 development:
   adapter: jdbc
   driver: org.postgresql.Driver
+  database: postgresql
   username: postgres
   password: sa
   url: jdbc:postgresql://localhost/app_name
@@ -15,6 +17,7 @@ development:
 test:
   adapter: jdbc
   driver: org.postgresql.Driver
+  database: postgresql
   username: postgres
   password: sa
   url: jdbc:postgresql://localhost/app_name_test
